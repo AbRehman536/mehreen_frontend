@@ -8,7 +8,10 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   bool isCheck = false;
+  bool isVisible = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,10 +30,20 @@ class _LoginFormState extends State<LoginForm> {
                 height: double.infinity,
             fit: BoxFit.fill,),
           ),
+          Positioned(
+            bottom: 20,
+            right: 100,
+            child: Text("Login Form",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w900,
+                  fontSize: 30
+              ),),
+          ),
           Center(
             child: Container(
               width: 450,
-              height: 300,
+              height: 350,
               decoration: BoxDecoration(
                 color: Colors.deepPurpleAccent.withOpacity(0.3),
                   borderRadius: BorderRadius.circular(12),
@@ -43,16 +56,36 @@ class _LoginFormState extends State<LoginForm> {
                 padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 20),
                 child: Column(
                   children: [
-                    Text("Login",
+                    Text("Welcome Back!",
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w900,
                       fontSize: 20
                     ),),
+                    SizedBox(height: 5,),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: RichText(
+                          text: TextSpan(
+                        children: [
+                          TextSpan(
+                              text: "Email",
+                              style: TextStyle(
+                                color: Colors.white
+                              )
+                          ),
+                          TextSpan(text: " *",
+                              style: TextStyle(
+                              color: Colors.red
+                          )),
+                        ]
+                      )),
+                    ),
+                    SizedBox(height: 10,),
                     TextField(
+                      controller: emailController,
                       decoration: InputDecoration(
-                        label: Text("Username"),
-                        hint: Text("Abdullah Rehman"),
+                        hint: Text("abdullah@gmail.com"),
                         prefixIcon: Icon(Icons.email),
                         prefixIconColor: Colors.white,
                         suffixIconColor: Colors.white,
@@ -72,11 +105,32 @@ class _LoginFormState extends State<LoginForm> {
                       ),
                     ),
                     SizedBox(height: 10,),
-                    TextField( decoration: InputDecoration(
-                        label: Text("Password"),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: RichText(
+                          text: TextSpan(
+                              children: [
+                                TextSpan(
+                                    text: "Password",
+                                    style: TextStyle(
+                                        color: Colors.white
+                                    )
+                                ),
+                                TextSpan(text: " *",
+                                    style: TextStyle(
+                                        color: Colors.red
+                                    )),
+                              ]
+                          )),
+                    ),
+                    SizedBox(height: 10,),
+                    TextField(
+                      obscureText: isVisible,
+                      controller: passwordController,
+                      decoration: InputDecoration(
                         hint: Text("*********"),
                         prefixIcon: Icon(Icons.lock),
-                        suffixIcon: Icon(Icons.visibility),
+                        suffixIcon: Icon(isVisible ? Icons.visibility : Icons.visibility_off),
                       prefixIconColor: Colors.white,
                       suffixIconColor: Colors.white,
                       hintStyle: TextStyle(
@@ -91,7 +145,13 @@ class _LoginFormState extends State<LoginForm> {
                                 color: Colors.white
                             )
                         )
-                    ),),
+                    ),
+                      onTap: (){
+                        setState(() {
+                          isVisible = !isVisible;
+                        });
+                      },
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -133,7 +193,33 @@ class _LoginFormState extends State<LoginForm> {
                             borderRadius: BorderRadius.circular(12)
                           )
                         ),
-                          onPressed: (){},
+                          onPressed: (){
+                          if(emailController.text.isEmpty){
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(SnackBar(content: Text("Email is Required")));
+                            return;
+                          }
+                          if(passwordController.text.isEmpty){
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(SnackBar(content: Text("Password is Required")));
+                            return;
+                          }
+                          if(passwordController.text.length < 8){
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(SnackBar(content: Text("Password must be more than 8 digits")));
+                            return;
+                          }
+                          if(isCheck == false){
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(SnackBar(content: Text("Accept Term and Conditions")));
+                            return;
+                          }
+                          else{
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(SnackBar(content: Text("Login Successful")));
+                            return;
+                          }
+                          },
                           child: Text("Login")),
                     ),
                     Row(
