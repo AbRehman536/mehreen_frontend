@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mehreen_frontend/app_bar.dart';
 import 'package:mehreen_frontend/images.dart';
 import 'package:mehreen_frontend/login_form.dart';
+import 'package:mehreen_frontend/pageView.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: LoginForm()
+      home: OnBoardingScreen()
     );
   }
 }
