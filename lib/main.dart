@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mehreen_frontend/app_bar.dart';
 import 'package:mehreen_frontend/images.dart';
+import 'package:mehreen_frontend/list_view.dart';
 import 'package:mehreen_frontend/login_form.dart';
 import 'package:mehreen_frontend/pageView.dart';
 
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: OnBoardingScreen()
+      home: ListViewScreen()
     );
   }
 }
